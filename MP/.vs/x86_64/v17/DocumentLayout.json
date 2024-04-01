@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Daniel\\Documents\\CollegeYearThree\\Term 2\\LBYARCH\\Final\\x86_64\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D3898287-9ABB-455D-8004-582762C660BF}|x86_64\\x86_64.vcxproj|C:\\Users\\Daniel\\Documents\\CollegeYearThree\\Term 2\\LBYARCH\\Final\\x86_64\\x86_64\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D3898287-9ABB-455D-8004-582762C660BF}|x86_64\\x86_64.vcxproj|solutionrelative:x86_64\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D3898287-9ABB-455D-8004-582762C660BF}|x86_64\\x86_64.vcxproj|C:\\Users\\Daniel\\Documents\\CollegeYearThree\\Term 2\\LBYARCH\\Final\\x86_64\\x86_64\\asmfunc.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{D3898287-9ABB-455D-8004-582762C660BF}|x86_64\\x86_64.vcxproj|solutionrelative:x86_64\\asmfunc.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "asmfunc.asm",
+              "DocumentMoniker": "C:\\Users\\Daniel\\Documents\\CollegeYearThree\\Term 2\\LBYARCH\\Final\\x86_64\\x86_64\\asmfunc.asm",
+              "RelativeDocumentMoniker": "x86_64\\asmfunc.asm",
+              "ToolTip": "C:\\Users\\Daniel\\Documents\\CollegeYearThree\\Term 2\\LBYARCH\\Final\\x86_64\\x86_64\\asmfunc.asm",
+              "RelativeToolTip": "x86_64\\asmfunc.asm",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-04-01T20:40:59.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.c",
+              "DocumentMoniker": "C:\\Users\\Daniel\\Documents\\CollegeYearThree\\Term 2\\LBYARCH\\Final\\x86_64\\x86_64\\main.c",
+              "RelativeDocumentMoniker": "x86_64\\main.c",
+              "ToolTip": "C:\\Users\\Daniel\\Documents\\CollegeYearThree\\Term 2\\LBYARCH\\Final\\x86_64\\x86_64\\main.c",
+              "RelativeToolTip": "x86_64\\main.c",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACkAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-01T20:37:45.776Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
