@@ -34,7 +34,7 @@ void manual_input() {
     }
 
     printf("Enter the float scalar value (A): ");
-    if (scanf_s("%lf", &A) != 1) {
+    if (scanf_s("%f", &A) != 1) {
         printf("Invalid input. Please enter a float.\n");
         clear_input_buffer();
         return;
@@ -61,51 +61,56 @@ void manual_input() {
         scanf_s("%f", &Y[i]);
     }
 
-    clock_t start, end;
-    double time_elapsed_c, time_elapsed_asm;
+    LARGE_INTEGER frequency, start, end;
+    double time_elapsed_c = 0.0, time_elapsed_asm = 0.0;
 
-    start = clock();
+    QueryPerformanceFrequency(&frequency);
+
+    // Run C version
+    QueryPerformanceCounter(&start);
     saxpy_c(n, X, Y, Z, A);
-    end = clock();
-
-    time_elapsed_c = ((double)(end - start)) / CLOCKS_PER_SEC;
+    QueryPerformanceCounter(&end);
+    time_elapsed_c = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
 
     printf("\nResults of C version:\n");
-
     for (int i = 0; i < display_count; ++i) {
         printf("%.2f ", Z[i]);
     }
     printf("\n");
+    printf("Processing Time (C version): %.6f ms\n", time_elapsed_c);
 
-    printf("Processing Time (C version): %.2f seconds\n", time_elapsed_c);
+    memset(Z, 0, n * sizeof(float)); // Clear Z
 
-    start = clock();
+    // Run Assembly version
+    QueryPerformanceCounter(&start);
     saxpy_asm(n, X, Y, Z, A);
-    end = clock();
-
-    time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
+    QueryPerformanceCounter(&end);
+    time_elapsed_asm = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
 
     printf("\nResults of Assembly version:\n");
-
     for (int i = 0; i < display_count; ++i) {
         printf("%.2f ", Z[i]);
     }
     printf("\n");
-
-    printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
+    printf("Processing Time (x86-64 Assembly version): %.6f ms\n", time_elapsed_asm);
 
     free(X);
     free(Y);
     free(Z);
 }
 
+
 // Function for maximum tests
 void maximum_tests() {
     int exponent, runs = 30;
     float A;
 
-    printf("Enter the scalar value (A): ");
-    scanf_s("%f", &A);
+    printf("Enter the float scalar value (A): ");
+    if (scanf_s("%f", &A) != 1) {
+        printf("Invalid input. Please enter a float.\n");
+        clear_input_buffer();
+        return;
+    }
 
     printf("\nSelect an option for maximum test:\n");
     printf("[1] 2^20\n");
