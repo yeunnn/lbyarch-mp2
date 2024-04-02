@@ -3,7 +3,7 @@
 This repository contains a implementation of the SAXPY operation (A*X + Y), a fundamental linear algebra computation used in various scientific and engineering applications. The project showcases two versions of the SAXPY kernel: one written in C Language and another in x86-64 assembly language, both designed to leverage their computational efficiency on the said SAXPY operation.
 
 ## How to run
-- Open folder MP using visual studio, or simply run "x86_x64" in the Debug folder in the x64 folder.
+- Open "x86_64.sln" in the folder MP using visual studio, or simply run "x86_x64" exe in the Debug folder in the x64 folder.
 
 ## Specifications
 
