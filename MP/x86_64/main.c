@@ -16,16 +16,29 @@ void saxpy_c(int n, float* X, float* Y, float* Z, float A) {
     }
 }
 
+void clear_input_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
 // Function for manual input
 void manual_input() {
     int n;
     float A;
 
     printf("Enter the length of the vectors (N): ");
-    scanf_s("%d", &n);
+    if (scanf_s("%d", &n) != 1 || n <= 0) {
+        printf("Invalid input. Please enter a positive integer.\n");
+        clear_input_buffer();
+        return;
+    }
 
-    printf("Enter the scalar value (A): ");
-    scanf_s("%f", &A);
+    printf("Enter the float scalar value (A): ");
+    if (scanf_s("%lf", &A) != 1) {
+        printf("Invalid input. Please enter a float.\n");
+        clear_input_buffer();
+        return;
+    }
 
     float* X = (float*)malloc(n * sizeof(float));
     float* Y = (float*)malloc(n * sizeof(float));
@@ -37,6 +50,7 @@ void manual_input() {
         return;
     }
 
+    printf("\nFormat: if n is = 5 then input the float vector values seperated by space (1.0 2.0 3.0 4.0 5.0)\n");
     printf("Enter the elements of vector X: ");
     for (int i = 0; i < n; ++i) {
         scanf_s("%f", &X[i]);
