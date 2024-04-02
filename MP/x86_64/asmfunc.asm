@@ -1,3 +1,6 @@
+; Argamosa, Daniel Cedric S. (S12)
+; Donato, Adriel Joseph Y. (S12)
+
 ; assembly using x86-64
 section .text
 bits 64
