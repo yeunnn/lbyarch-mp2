@@ -1,17 +1,10 @@
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <windows.h>
-//
-//extern void asmhello(); // c call
-//
-//int main() {
-//	asmhello(); // assembly file
-//	return 0;
-//}
+// Argamosa, Daniel Cedric S. (S12)
+// Donato, Adriel Joseph Y. (S12)
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 
 // Declaration of x86-64 assembly function
 extern void saxpy_asm(int n, float* X, float* Y, float* Z, float A);
@@ -94,7 +87,7 @@ void manual_input() {
 
 // Function for maximum tests
 void maximum_tests() {
-    int exponent;
+    int exponent, runs = 30;
     float A;
 
     printf("Enter the scalar value (A): ");
@@ -134,37 +127,53 @@ void maximum_tests() {
         Y[j] = (float)rand() / RAND_MAX;
     }
 
-    clock_t start, end;
-    double time_elapsed_c, time_elapsed_asm;
+    LARGE_INTEGER frequency, start, end;
+    double time_elapsed_c = 0.0, time_elapsed_asm = 0.0;
 
-    start = clock();
-    saxpy_c(n, X, Y, Z, A);
-    end = clock();
+    QueryPerformanceFrequency(&frequency);
 
-    time_elapsed_c = ((double)(end - start)) / CLOCKS_PER_SEC;
+    // Run C version 30 times
+    printf("\nC Version Execution Times (in ms):\n");
+    for (int i = 0; i < runs; i++) {
+        memset(Z, 0, n * sizeof(float)); // Clear Z before each run
+        QueryPerformanceCounter(&start);
+        saxpy_c(n, X, Y, Z, A);
+        QueryPerformanceCounter(&end);
+        double time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+        time_elapsed_c += (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+        printf("Run %d: %.6f ms\n", i + 1, time);
+    }
 
-    printf("\nResults of C version:\n");
-  
+    printf("\nResults of C version (last run):\n");
     for (int i = 0; i < display_count; ++i) {
         printf("%.2f ", Z[i]);
     }
     printf("\n");
 
-    printf("Processing Time (C version): %.2f seconds\n", time_elapsed_c);
+    // Clear Z for the assembly version
+    memset(Z, 0, n * sizeof(float));
 
-    start = clock();
-    saxpy_asm(n, X, Y, Z, A);
-    end = clock();
+    // Run assembly version 30 times
+    printf("\nAssembly Version Execution Times (in ms):\n");
+    for (int i = 0; i < runs; i++) {
+        memset(Z, 0, n * sizeof(float)); // Clear Z before each run
+        QueryPerformanceCounter(&start);
+        saxpy_asm(n, X, Y, Z, A);
+        QueryPerformanceCounter(&end);
+        double time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+        time_elapsed_asm += (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+        printf("Run %d: %.6f ms\n", i + 1, time);
+    }
 
-    time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
-
-    printf("\nResults of Assembly version:\n");
+    printf("\nResults of Assembly version (last run):\n");
     for (int i = 0; i < display_count; ++i) {
         printf("%.2f ", Z[i]);
     }
     printf("\n");
 
-    printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
+    // Calculate and print average times in ms
+    printf("\nAverage Processing Time (C version): %.6f ms\n", time_elapsed_c / runs);
+    printf("Average Processing Time (x86-64 Assembly version): %.6f ms\n", time_elapsed_asm / runs);
 
     free(X);
     free(Y);
