@@ -14,15 +14,14 @@
 #include <time.h>
 
 // Declaration of x86-64 assembly function
-extern void saxpy_asm(float A, float* X, float* Y, float* Z, int n);
+extern void saxpy_asm(int n, float* X, float* Y, float* Z, float A);
 
 // C implementation of SAXPY function
-void saxpy_c(float A, float* X, float* Y, float* Z, int n) {
+void saxpy_c(int n, float* X, float* Y, float* Z, float A) {
     for (int i = 0; i < n; ++i) {
         Z[i] = A * X[i] + Y[i];
     }
 }
-
 
 // Function for manual input
 void manual_input() {
@@ -59,7 +58,7 @@ void manual_input() {
     double time_elapsed_c, time_elapsed_asm;
 
     start = clock();
-    saxpy_c(A, X, Y, Z, n);
+    saxpy_c(n, X, Y, Z, A);
     end = clock();
 
     time_elapsed_c = ((double)(end - start)) / CLOCKS_PER_SEC;
@@ -73,13 +72,11 @@ void manual_input() {
 
     printf("Processing Time (C version): %.2f seconds\n", time_elapsed_c);
 
-    memset(Z, 0, n * sizeof(float)); // clears Z for asm
+    start = clock();
+    saxpy_asm(n, X, Y, Z, A);
+    end = clock();
 
-    //start = clock();
-    saxpy_asm(A, X, Y, Z, n);
-    //end = clock();
-
-    //time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
+    time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
 
     printf("\nResults of Assembly version:\n");
 
@@ -88,7 +85,7 @@ void manual_input() {
     }
     printf("\n");
 
-    //printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
+    printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
 
     free(X);
     free(Y);
@@ -106,7 +103,7 @@ void maximum_tests() {
     printf("\nSelect an option for maximum test:\n");
     printf("[1] 2^20\n");
     printf("[2] 2^24\n");
-    printf("[3] 2^30\n\n");
+    printf("[3] 2^28\n\n");
     printf("Enter your choice: ");
     scanf_s("%d", &exponent);
 
@@ -116,7 +113,7 @@ void maximum_tests() {
     else if (exponent == 2)
         n = 1 << 24;
     else if (exponent == 3)
-        n = 1 << 30;
+        n = 1 << 28;
     else {
         printf("Invalid choice. Exiting maximum test.\n");
         return;
@@ -141,7 +138,7 @@ void maximum_tests() {
     double time_elapsed_c, time_elapsed_asm;
 
     start = clock();
-    saxpy_c(A, X, Y, Z, n);
+    saxpy_c(n, X, Y, Z, A);
     end = clock();
 
     time_elapsed_c = ((double)(end - start)) / CLOCKS_PER_SEC;
@@ -155,13 +152,11 @@ void maximum_tests() {
 
     printf("Processing Time (C version): %.2f seconds\n", time_elapsed_c);
 
-    memset(Z, 0, n * sizeof(float)); // clears Z for asm
+    start = clock();
+    saxpy_asm(n, X, Y, Z, A);
+    end = clock();
 
-    //start = clock();
-    saxpy_asm(A, X, Y, Z, n);
-    //end = clock();
-
-    //time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
+    time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
 
     printf("\nResults of Assembly version:\n");
     for (int i = 0; i < display_count; ++i) {
@@ -169,7 +164,7 @@ void maximum_tests() {
     }
     printf("\n");
 
-    //printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
+    printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
 
     free(X);
     free(Y);
@@ -183,7 +178,7 @@ int main() {
         printf("\nSelect an option:\n");
         printf("[0] End Program\n");
         printf("[1] Manual Input\n");
-        printf("[2] Maximum Tests (2^20, 2^24, 2^30)\n\n");
+        printf("[2] Maximum Tests (2^20, 2^24, 2^28)\n\n");
         printf("Enter your choice: ");
         scanf_s("%d", &choice);
 
