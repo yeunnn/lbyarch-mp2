@@ -13,12 +13,18 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Declaration of x86-64 assembly function
+extern void saxpy_asm(float A, float* X, float* Y, float* Z, int n);
+
+// C implementation of SAXPY function
 void saxpy_c(float A, float* X, float* Y, float* Z, int n) {
     for (int i = 0; i < n; ++i) {
         Z[i] = A * X[i] + Y[i];
     }
 }
 
+
+// Function for manual input
 void manual_input() {
     int n;
     float A;
@@ -32,6 +38,7 @@ void manual_input() {
     float* X = (float*)malloc(n * sizeof(float));
     float* Y = (float*)malloc(n * sizeof(float));
     float* Z = (float*)malloc(n * sizeof(float));
+    int display_count = (n > 10) ? 10 : n;
 
     if (X == NULL || Y == NULL || Z == NULL) {
         printf("Memory allocation failed\n");
@@ -49,28 +56,46 @@ void manual_input() {
     }
 
     clock_t start, end;
-    double time_elapsed;
+    double time_elapsed_c, time_elapsed_asm;
 
     start = clock();
     saxpy_c(A, X, Y, Z, n);
     end = clock();
 
-    time_elapsed = ((double)(end - start)) / CLOCKS_PER_SEC;
+    time_elapsed_c = ((double)(end - start)) / CLOCKS_PER_SEC;
 
     printf("\nResults of C version:\n");
-    int display_count = (n > 10) ? 10 : n;
+
     for (int i = 0; i < display_count; ++i) {
         printf("%.2f ", Z[i]);
     }
     printf("\n");
 
-    printf("Time Elapsed: %.2f seconds\n", time_elapsed);
+    printf("Processing Time (C version): %.2f seconds\n", time_elapsed_c);
+
+    memset(Z, 0, n * sizeof(float)); // clears Z for asm
+
+    //start = clock();
+    saxpy_asm(A, X, Y, Z, n);
+    //end = clock();
+
+    //time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+    printf("\nResults of Assembly version:\n");
+
+    for (int i = 0; i < display_count; ++i) {
+        printf("%.2f ", Z[i]);
+    }
+    printf("\n");
+
+    //printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
 
     free(X);
     free(Y);
     free(Z);
 }
 
+// Function for maximum tests
 void maximum_tests() {
     int exponent;
     float A;
@@ -100,6 +125,7 @@ void maximum_tests() {
     float* X = (float*)malloc(n * sizeof(float));
     float* Y = (float*)malloc(n * sizeof(float));
     float* Z = (float*)malloc(n * sizeof(float));
+    int display_count = (n > 10) ? 10 : n;
 
     if (X == NULL || Y == NULL || Z == NULL) {
         printf("Memory allocation failed\n");
@@ -112,28 +138,43 @@ void maximum_tests() {
     }
 
     clock_t start, end;
-    double time_elapsed;
+    double time_elapsed_c, time_elapsed_asm;
 
     start = clock();
     saxpy_c(A, X, Y, Z, n);
     end = clock();
 
-    time_elapsed = ((double)(end - start)) / CLOCKS_PER_SEC;
+    time_elapsed_c = ((double)(end - start)) / CLOCKS_PER_SEC;
 
-    printf("\nResults for N = %d:\n", n);
-    int display_count = (n > 10) ? 10 : n;
-    for (int j = 0; j < display_count; ++j) {
-        printf("%.2f ", Z[j]);
+    printf("\nResults of C version:\n");
+  
+    for (int i = 0; i < display_count; ++i) {
+        printf("%.2f ", Z[i]);
     }
     printf("\n");
 
-    printf("Time Elapsed: %.2f seconds\n", time_elapsed);
+    printf("Processing Time (C version): %.2f seconds\n", time_elapsed_c);
+
+    memset(Z, 0, n * sizeof(float)); // clears Z for asm
+
+    //start = clock();
+    saxpy_asm(A, X, Y, Z, n);
+    //end = clock();
+
+    //time_elapsed_asm = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+    printf("\nResults of Assembly version:\n");
+    for (int i = 0; i < display_count; ++i) {
+        printf("%.2f ", Z[i]);
+    }
+    printf("\n");
+
+    //printf("Processing Time (x86-64 Assembly version): %.2f seconds\n", time_elapsed_asm);
 
     free(X);
     free(Y);
     free(Z);
 }
-
 
 int main() {
     int choice;

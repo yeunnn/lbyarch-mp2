@@ -1,2 +1,5 @@
 ﻿  main.c
+C:\Users\Daniel\Documents\CollegeYearThree\Term 2\LBYARCH\Final\x86_64\x86_64\main.c(76,5): warning C4013: 'memset' undefined; assuming extern returning int
+C:\Users\Daniel\Documents\CollegeYearThree\Term 2\LBYARCH\Final\x86_64\x86_64\main.c(59,28): warning C4101: 'time_elapsed_asm': unreferenced local variable
+C:\Users\Daniel\Documents\CollegeYearThree\Term 2\LBYARCH\Final\x86_64\x86_64\main.c(141,28): warning C4101: 'time_elapsed_asm': unreferenced local variable
   x86_64.vcxproj -> C:\Users\Daniel\Documents\CollegeYearThree\Term 2\LBYARCH\Final\x86_64\x64\Debug\x86_64.exe

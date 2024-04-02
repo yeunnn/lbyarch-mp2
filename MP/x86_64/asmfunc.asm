@@ -1,18 +1,32 @@
 ; assembly using x86-64
-
-section .data
-msg db "Hello World", 13, 10, 0
-
 section .text
 bits 64
 default rel ; to handle address relocation
-global asmhello
-extern printf
+global saxpy_asm
 
-asmhello:
-	sub rsp, 8*5 ; caller or stack frame with 40 bytes
-	lea rcx, [msg]
-	call printf
-	add rsp, 8*5 ; closing statement
+saxpy_asm:
+    pxor xmm0, xmm0
+    pxor xmm1, xmm1
+    pxor xmm2, xmm2
+    pxor xmm3, xmm3
 
-	ret
+    movss xmm0, [rcx] ; A
+    movss xmm1, [rdx] ; X
+    movss xmm2, [r8] ; Y
+    movss xmm3, [r9] ; Z
+    mov rcx, [r10] ;  n
+
+    saxpy_loop:
+
+        mulss xmm1, xmm0   ; Result stored in xmm1
+
+        addss xmm1, xmm2   ; Result stored in xmm1
+
+        movss xmm3, xmm1   ; Store the result in Z
+
+        add rdx, 4         ; Move to the next element of X
+        add r8, 4          ; Move to the next element of Y
+        add r9, 4          ; Move to the next element of Z
+
+        loop saxpy_loop
+    ret
